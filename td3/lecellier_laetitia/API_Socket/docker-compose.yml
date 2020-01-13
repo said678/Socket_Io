@@ -1,0 +1,14 @@
+version: '3.7'
+services:
+  chat:
+    build:
+      context: .
+      target: development
+    command: npx nodemon index.js
+    ports:
+      - '8080:8080'
+    volumes:
+      - .:/td/td3/lecellier_laetitia/API_Socket
+      - chat_node_modules:/td/td3/lecellier_laetitia/API_Socket/node_modules
+volumes:
+  chat_node_modules:
