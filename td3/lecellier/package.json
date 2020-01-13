@@ -1,0 +1,22 @@
+{
+  "name": "lecellier_laetitia",
+  "version": "1.0.0",
+  "description": "Réussite de la premire partie : Mise en place d’un ChatBot\r En lançant le navigateur sur l’adresse de l'API : http://localhost:3000, une page contenant un chat vous propose à répondre aux questions suivantes:\r - Quel est votre nom ?\r - Quel est votre prénom ?\r - Quel est votre numero SSN ?\r Après la saisie de informations sur le numero de sécurité sociale, l'API devra :\r - Verifier la validité de son format, extraire et afficher les informations que le \r numéro SSN comporte! :: RESTE PLUS QU'A AFFICHER DIRECTEMENT SES INFOS SUR LA CONSOLE",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bluebird": "^3.7.2",
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.8.7",
+    "nodemon": "^2.0.2",
+    "request": "^2.88.0",
+    "request-promise-native": "^1.0.8",
+    "session.socket.io": "^0.2.1",
+    "socket.io": "^2.3.0"
+  }
+}
