@@ -49,6 +49,43 @@ io.on('connection', function(socket){
                 socket.emit('out', 'Voici les informations de votre ssn : Vous êtes un(e) ' + ssn_rep.extractSexe() +
                 ', vous êtes né le : ' + ssn_rep.extractDateNaissance() + 'plus exactement dans le: ' + ssn_rep.extractLieuNaissance() 
                 + ' et vous êtes le(la) : ' + ssn_rep.extractNumeroNaissance() + 'e enfant a être né ce jour là !');
+                socket.emit('out', 'ssn non présent dans la base, Sauvegarder les données dans la base ? (oui/non)');
+                compteur = compteur + 1;
+                /*
+                Model.find({ssn_complet : person.SSN}).then(function(result_ssn){
+                    if(result_ssn.length == 0){
+                        socket.emit('out', 'ssn non présent dans la base, Sauvegarder les données dans la base ? (oui/non)');
+                        compteur = compteur + 1;
+                    }
+                    else{
+                        socket.emit('out','vous êtes : ' + result_ssn);
+                        compteur = 4;
+                    }
+                }); */
+            }
+        }
+        
+        else if (compteur == 3)
+        {
+            if(reponse.toLowerCase() === 'oui')
+            {
+                // utilisation de l'API REST
+                Model.createPersonne(person).then(function(model){
+                    new Model(model).save().then(function(reponse){
+                        socket.emit('out', 'Vous avez été enregistrer!');
+                        compteur = compteur + 1;
+                }, function(err){
+                        socket.emit('out', 'Enregistrement échoué! ' + err);
+                    });
+                })/*.catch(function(err){
+                    socket.emit('out', 'Enregistrement échoué!' + err);
+                });*/
+            }
+            else if (reponse.toLowerCase() === 'non'){
+                //socket.close();
+            }
+            else{
+                    socket.emit('out', 'oui ou non!!');
             }
         }
     });

@@ -5,4 +5,4 @@ En lançant le navigateur sur l’adresse de l'API : http://localhost:3000, une 
 - Quel est votre numero SSN ?
 Après la saisie de informations sur le numero de sécurité sociale, l'API devra :
 - Verifier la validité de son format, extraire et afficher les informations que le 
-numéro SSN comporte! :: RESTE PLUS QU'A AFFICHER DIRECTEMENT SES INFOS SUR LA CONSOLE
+numéro SSN comporte!

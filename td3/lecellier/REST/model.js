@@ -15,11 +15,14 @@ let mongoose = require('mongoose');
 //Fichier permettant de savoir si le numéro SSN est bon!
 let ssnVerif = require('./SSN');
 // Definition et connexion à la base de données
-let database = mongoose.connect('mongodb://localhost/test', {
+let database = mongoose.connect('mongodb://localhost:27017/test', {
     promiseLibrary: require('bluebird'),
     useNewUrlParser: true,
     useUnifiedTopology: true
-    });
+    }, function(err){if(err){throw err;}});
+/*database.connection.readyState == 0; // not connected
+database.connection.readyState == 1; // connected
+database.connection. */
 // Permet de connaître le nom des communes et départements
 let url = 'https://geo.api.gouv.fr';
 
@@ -45,9 +48,9 @@ personneSchema.statics.createPersonne = function (data)
         if (ssn.isValid()) 
         {
             let ssnInfo = ssn.getInfo();
-            if (ssnInfo['LieuNaissance']['dept'] !== 'Etranger') 
+            if (ssnInfo['LieuNaissance']['departement'] !== 'Etranger') 
             {
-                request(URL + '/communes/' + ssnInfo['LieuNaissance']['dept'], (error, response, body) => 
+                request(url + '/communes/' + ssnInfo['LieuNaissance']['departement'], (error, response, body) => 
                 {
                     if (!error) 
                     {
@@ -68,9 +71,9 @@ personneSchema.statics.createPersonne = function (data)
         }
     }).then((res) => {
         return new Promise(((resolve, reject) => {
-            if (res[0]['LieuNaissance']['dept'] !== 'Etranger') 
+            if (res[0]['LieuNaissance']['departement'] !== 'Etranger') 
             {
-                request(URL + '/communes/' + res[1]['LieuNaissance']['dept'] + res[1]['LieuNaissance']['commune'], (error, response, body) => {
+                request(url + '/communes/' + res[1]['LieuNaissance']['departement'] + res[1]['LieuNaissance']['commune'], (error, response, body) => {
                     if (!error) 
                     {
                         res.push(JSON.parse(body));
@@ -105,9 +108,9 @@ personneSchema.statics.createPersonne = function (data)
             ssn_complet : data['SSN'],
             SSN: 
             {
-                departement: ssnInfo['LieuNaissance']['dept'] !== 'Etranger' ? dept['nom'] : null,
-                pays: ssnInfo['LieuNaissance']['dept'] !== 'Etranger' ? 'France' : NomPays[ssnInfo['LieuNaissance']['pays']],
-                commune: ssnInfo['LieuNaissance']['dept'] !== 'Etranger' ? commune['nom'] : null
+                departement: ssnInfo['LieuNaissance']['departement'] !== 'Etranger' ? dept['nom'] : null,
+                pays: ssnInfo['LieuNaissance']['departement'] !== 'Etranger' ? 'France' : NomPays[ssnInfo['LieuNaissance']['pays']],
+                commune: ssnInfo['LieuNaissance']['departement'] !== 'Etranger' ? commune['nom'] : null
             }
         };
     });
