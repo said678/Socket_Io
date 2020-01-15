@@ -11,12 +11,19 @@ Après la saisie de informations sur le numero de sécurité sociale, l'API devr
 - Verifier la validité de son format, extraire et afficher les informations que le 
 numéro SSN comporte!
 
-Numéro d'exemple:
-Nom : 
-Prenom : 
-SSN : 180079938020602 
+Numéro d'exemple: 
+SSN : 180079938020602  | 298069152102373  | 173119206201448 | 173119300705974
 
-Après avoir récupérer toutes ses informations, l'application propose de les sauvegarder 
-dans la base de données MongoDB! 
+Après avoir récupérer toutes ses informations, l'application propose de les sauvegarder dans la base de données MongoDB! --> ne fonctionne plus
 
-Création de l'image Docker
+Docker fonctionnel
+Commande pour créer et activer
+cd /c/Users/laeti/Documents/Master\ M1\ MIAGE/Technolog/Socket_Io/td3/lecellier/
+docker-compose.exe up 
+docker rmi lecellier_nodejs 
+docker-compose.exe down 
+docker-compose.exe rm -f 
+
+Sur Internet, taper :
+http://localhost:3000/ --> pour l'appli 
+http://localhost:8081  --> pour mongoDB

@@ -1,0 +1,36 @@
+version: '3'
+services:
+  mongo:
+    network_mode: host
+    image: 'mongo'
+    container_name: 'vilaindb'
+    volumes:
+      - mongo_vol:/data/db
+    ports:
+      - '27017'
+
+# Mongo-express, interface web pour administration mongo
+# utiliser "http://localhost:8081" pour y accéder
+#
+  express:
+    network_mode: host
+    image: mongo-express
+    container_name: 'vilainexpress'
+    ports:
+      - '8081'
+    environment:
+      - ME_CONFIG_MONGODB_SERVER=localhost
+
+  nodejs:
+    network_mode: host
+    build: .
+    container_name: 'vilainjs'
+    ports:
+      - '3000'
+# Pour la persistence des données mongo, un volume va être créé
+# par docker et mappé plus haut à "/data/db" du container vilaindb.
+# Cela permet de garder les données saisies même en cas de destruction 
+# du container mongo.
+#
+volumes:
+  mongo_vol:

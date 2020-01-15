@@ -14,7 +14,8 @@ let NomPays = require('../_supports/pays');
 let mongoose = require('mongoose');
 //Fichier permettant de savoir si le numéro SSN est bon!
 let ssnVerif = require('./SSN');
-// Definition et connexion à la base de données
+// Definition et connexion à la base de données 
+
 let database = mongoose.connect('mongodb://localhost:27017/test', {
     promiseLibrary: require('bluebird'),
     useNewUrlParser: true,
