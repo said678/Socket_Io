@@ -1,5 +1,0 @@
-git init
-git add *
-git commit -m "comm"
-git remote add origin git@github.com:LaetitiaFF/Socket_Io.git
-git push -u origin master

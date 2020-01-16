@@ -44,14 +44,15 @@ let personneSchema = new Schema({
 
 personneSchema.statics.createPersonne = function (data) 
 {
+    let ssn = new ssnVerif(data['SSN']);
+    let ssnInfo = ssn.getInfo();
     return new Promise((resolve, reject) => {
-        let ssn = new ssnVerif(data['SSN']);
+        //let ssn = new ssnVerif(data['SSN']);
         if (ssn.isValid()) 
         {
-            let ssnInfo = ssn.getInfo();
             if (ssnInfo['LieuNaissance']['departement'] !== 'Etranger') 
             {
-                request(url + '/communes/' + ssnInfo['LieuNaissance']['departement'], (error, response, body) => 
+                request(url + '/departements/' + ssnInfo['LieuNaissance']['departement'], (error, response, body) => 
                 {
                     if (!error) 
                     {
@@ -72,13 +73,12 @@ personneSchema.statics.createPersonne = function (data)
         }
     }).then((res) => {
         return new Promise(((resolve, reject) => {
-            if (res[0]['LieuNaissance']['departement'] !== 'Etranger') 
+            if (ssnInfo['LieuNaissance']['departement'] !== 'Etranger') 
             {
-                request(url + '/communes/' + res[1]['LieuNaissance']['departement'] + res[1]['LieuNaissance']['commune'], (error, response, body) => {
+                request(url + '/communes/' + ssnInfo['LieuNaissance']['departement'] + ssnInfo['LieuNaissance']['commune'], (error, response, body) => {
                     if (!error) 
                     {
                         res.push(JSON.parse(body));
-                        console.log(res);
                         resolve(res);
                     } 
                     else 
@@ -90,28 +90,30 @@ personneSchema.statics.createPersonne = function (data)
             resolve(res);
         }));
     }).then((res) => {
-        let dept, ssnInfo, data, commune;
+
+        let dept, ssnInfo1, data, commune;
         if (res.length > 2) 
         {
             dept = res[0];
-            ssnInfo = res[1];
+            ssnInfo1 = res[1];
             data = res[2];
             commune = res[3];
         }
         else 
         {
-            ssnInfo = res[0];
+            ssnInfo1 = res[0];
             data = res[1];
         }
+        
         return {
             nom: data['nom'],
             prenom: data['prenom'],
             ssn_complet : data['SSN'],
             SSN: 
             {
-                departement: ssnInfo['LieuNaissance']['departement'] !== 'Etranger' ? dept['nom'] : null,
-                pays: ssnInfo['LieuNaissance']['departement'] !== 'Etranger' ? 'France' : NomPays[ssnInfo['LieuNaissance']['pays']],
-                commune: ssnInfo['LieuNaissance']['departement'] !== 'Etranger' ? commune['nom'] : null
+                departement: ssnInfo['LieuNaissance']['departement'] ,//= ['LieuNaissance']['departement'] !== 'Etranger'? dept : null,
+                pays: ssnInfo['LieuNaissance']['departement'] = ['LieuNaissance']['departement'] !== 'Etranger' ? 'France' : NomPays[ssnInfo['LieuNaissance']['pays']],
+                commune: ssnInfo['LieuNaissance']['commune'] //= ['LieuNaissance']['commune'] //!== 'Etranger' ? commune : null
             }
         };
     });

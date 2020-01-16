@@ -19,11 +19,20 @@ Après avoir récupérer toutes ses informations, l'application propose de les s
 Docker fonctionnel
 Commande pour créer et activer
 cd /c/Users/laeti/Documents/Master\ M1\ MIAGE/Technolog/Socket_Io/td3/lecellier/
-docker-compose.exe up 
-docker rmi lecellier_nodejs 
-docker-compose.exe down 
+docker-compose.exe up
+docker-compose.exe down
 docker-compose.exe rm -f 
+docker rmi lecellier_nodejs 
 
 Sur Internet, taper :
 http://localhost:3000/ --> pour l'appli 
-http://localhost:8081  --> pour mongoDB
+http://localhost:8081  --> pour mongoDB soit http://localhost:8081/db/test/people
+ou alors sur la base test puis la collection people
+
+
+Ajout sur le github :
+git init
+git add *
+git commit -m "comm"
+git remote add origin git@github.com:LaetitiaFF/Socket_Io.git
+git push -u origin master

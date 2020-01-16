@@ -79,25 +79,25 @@ var SSN = /** @class */ (function ()
     // Definir le lieu de naissance
     SSN.prototype.extractLieuNaissance = function () 
     {
-        let dept = +this.secu_number.substr(5, 2);
-        if (dept == 97 || dept == 98) 
+        let departement = +this.secu_number.substr(5, 2);
+        if (departement == 97 || departement == 98) 
         {
             return {
-                dept : this.secu_number.substr(5, 3),
+                departement : this.secu_number.substr(5, 3),
                 commune: this.secu_number.substr(8, 2),
             };
         }
-        else if (dept == 99) 
+        else if (departement == 99) 
         {
             return {
-                dept: "Etranger",
+                departement: "Etranger",
                 pays: this.secu_number.substr(7, 3)
             };
         }
         else 
         {
             return {
-                dept: this.secu_number.substr(5, 2),
+                departement: this.secu_number.substr(5, 2),
                 commune: this.secu_number.substr(7, 3),
             };
         }
