@@ -1,12 +1,12 @@
 {
   "name": "lecellier_laetitia",
   "version": "1.0.0",
-  "description": "Réussite de la premire partie : Mise en place d’un ChatBot\r En lançant le navigateur sur l’adresse de l'API : http://localhost:3000, une page contenant un chat vous propose à répondre aux questions suivantes:\r - Quel est votre nom ?\r - Quel est votre prénom ?\r - Quel est votre numero SSN ?\r Après la saisie de informations sur le numero de sécurité sociale, l'API devra :\r - Verifier la validité de son format, extraire et afficher les informations que le \r numéro SSN comporte! :: RESTE PLUS QU'A AFFICHER DIRECTEMENT SES INFOS SUR LA CONSOLE",
+  "description": "Chat-box pour communiquer des informations à partir du numéro SSN, proposition de stocker les infos sur MongoDB et réalisation d'image Docker (appli+MongoDB)",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "Lecellier Laetitia",
   "license": "ISC",
   "dependencies": {
     "bluebird": "^3.7.2",

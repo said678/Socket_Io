@@ -23,67 +23,52 @@ io.on('connection', function(socket){
     socket.emit('out', 'Quel est votre nom?');
     socket.on('in', function(reponse){
         socket.emit('out', reponse);
-        if(compteur == 0)
-        {
+        if(compteur == 0){
             person.nom = reponse;
             socket.emit('out', 'Quel est votre prénom?');
             compteur = compteur + 1;
         }
-        else if (compteur == 1)
-        {
+        else if (compteur == 1){
             person.prenom = reponse;
             socket.emit('out', 'Quel est votre numéro SSN?');
             compteur = compteur + 1;
         }
-        else if (compteur == 2)
-        {
+        else if (compteur == 2){
             let ssn_rep = new ssn(reponse);
-            if(!ssn_rep.isValid())
-            {
-                socket.emit('out', 'ce ssn n est pas correct!');
+            if(!ssn_rep.isValid()){
+                socket.emit('out', 'Ce ssn n est pas correct!');
             }
-            else
-            {
+            else{
                 person.SSN = reponse
                 socket.emit('out', person.nom + ' ' + person.prenom + ', a pour ssn : ' + person.SSN);
                 socket.emit('out', 'Voici les informations de votre ssn : Vous êtes un(e) ' + ssn_rep.extractSexe() +
-                ', vous êtes né le : ' + ssn_rep.extractDateNaissance() + 'plus exactement dans le: ' + ssn_rep.extractLieuNaissance() 
+                ', vous êtes né le : ' + ssn_rep.extractDateNaissance() + ' plus exactement dans le: ' + ssn_rep.extractLieuNaissance() 
                 + ' et vous êtes le(la) : ' + ssn_rep.extractNumeroNaissance() + 'e enfant a être né ce jour là !');
-                socket.emit('out', 'ssn non présent dans la base, Sauvegarder les données dans la base ? (oui/non)');
-                compteur = compteur + 1;
-                /*
-                Model.find({ssn_complet : person.SSN}).then(function(result_ssn){
-                    if(result_ssn.length == 0){
-                        socket.emit('out', 'ssn non présent dans la base, Sauvegarder les données dans la base ? (oui/non)');
+                Model.find({ssn_complet : person.SSN}).then(function(result_ssn){ // Vérification de la présence du numéro ssn dans la base de données 
+                    if(result_ssn.length == 0){ // Si ce numéro n'est pas présent, l'application propose de le sauvegarder
+                        socket.emit('out', 'Ce ssn n est pas présent dans la base, Sauvegarder les données dans la base ? (oui/non)');
                         compteur = compteur + 1;
                     }
-                    else{
+                    else{ // Sinon l'application affiche la personne présente dans la base liée à ce numéro
                         socket.emit('out','vous êtes : ' + result_ssn);
                         compteur = 4;
                     }
-                }); */
+                }); 
             }
         }
-        
-        else if (compteur == 3)
-        {
-            if(reponse.toLowerCase() === 'oui')
-            {
+        else if (compteur == 3){
+            if(reponse.toLowerCase() === 'oui'){
                 // utilisation de l'API REST
                 Model.createPersonne(person).then(function(model){
                     new Model(model).save().then(function(reponse){
-                        socket.emit('out', 'Vous avez été enregistrer!');
+                        socket.emit('out', 'Vous avez été enregistré!');
                         compteur = compteur + 1;
                 }, function(err){
                         socket.emit('out', 'Enregistrement échoué! ' + err);
                     });
-                })/*.catch(function(err){
-                    socket.emit('out', 'Enregistrement échoué!' + err);
-                });*/
+                })
             }
-            else if (reponse.toLowerCase() === 'non'){
-                //socket.close();
-            }
+            else if (reponse.toLowerCase() === 'non'){}
             else{
                     socket.emit('out', 'oui ou non!!');
             }
