@@ -1,7 +1,9 @@
-FROM ubuntu:latest
+FROM alpine:latest
 
-RUN apt update
-RUN apt install nodejs -y
+MAINTAINER laetitia lecellier <laetitia.lecellier@free.fr>
+
+RUN apk update && apk upgrade
+RUN apk add nodejs
 
 EXPOSE 3000
 

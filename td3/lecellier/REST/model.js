@@ -49,7 +49,6 @@ personneSchema.statics.createPersonne = function (data) {
                     if (!error) {
                         let nomDepartement = JSON.parse(body);
                         ssnInfo['LieuNaissance']['departement'] = nomDepartement.nom; 
-                        console.log(ssnInfo['LieuNaissance']['departement']);
                         resolve([JSON.parse(body), ssnInfo, data]);
                     } 
                     else {
@@ -57,6 +56,7 @@ personneSchema.statics.createPersonne = function (data) {
                     }
                 });
             }
+            else{}
             resolve([ssnInfo, data]);
         } 
         else {
@@ -71,7 +71,6 @@ personneSchema.statics.createPersonne = function (data) {
                         res.push(JSON.parse(body)); 
                         let nomCommune = JSON.parse(body);
                         ssnInfo['LieuNaissance']['commune'] = nomCommune.nom; 
-                        console.log(ssnInfo['LieuNaissance']['commune']);
                         resolve(res);
                     } 
                     else {
@@ -79,21 +78,38 @@ personneSchema.statics.createPersonne = function (data) {
                     }
                 });
             }
+            else{
+                ssnInfo['LieuNaissance']['commune'] = ssnInfo['LieuNaissance']['departement'];
+                resolve(res);
+            }
         }));
     }).then((res) => {
         console.log(ssnInfo['LieuNaissance']['commune']);
         console.log(ssnInfo['LieuNaissance']['departement']);
-        
-        return {
-            nom: data['nom'],
-            prenom: data['prenom'],
-            ssn_complet : data['SSN'],
-            SSN: {
-                departement: ssnInfo['LieuNaissance']['departement'] ,//= ['LieuNaissance']['departement'] !== 'Etranger'? dept : null,
-                pays: ssnInfo['LieuNaissance']['departement'] = ['LieuNaissance']['departement'] !== 'Etranger' ? 'France' : NomPays[ssnInfo['LieuNaissance']['pays']],
-                commune: ssnInfo['LieuNaissance']['commune'] //= ['LieuNaissance']['commune'] !== 'Etranger' ? commune : null
-            }
-        };
+        if (ssnInfo['LieuNaissance']['departement'] !== 'Etranger'){
+            return {
+                nom: data['nom'],
+                prenom: data['prenom'],
+                ssn_complet : data['SSN'],
+                SSN: {
+                    departement: ssnInfo['LieuNaissance']['departement'] ,
+                    pays: ssnInfo['LieuNaissance']['departement'] = ['LieuNaissance']['departement'] !== 'Etranger' ? 'France' : NomPays[ssnInfo['LieuNaissance']['pays']],
+                    commune: ssnInfo['LieuNaissance']['commune'] 
+                }
+            };
+        }
+        else{
+            return {
+                nom: data['nom'],
+                prenom: data['prenom'],
+                ssn_complet : data['SSN'],
+                SSN: {
+                    departement: null,
+                    pays:NomPays[ssnInfo['LieuNaissance']['pays']],
+                    commune: null
+                }
+            };
+        }       
     });
 };
 module.exports = mongoose.model('Person', personneSchema);

@@ -62,17 +62,40 @@ io.on('connection', function(socket){
                 Model.createPersonne(person).then(function(model){
                     new Model(model).save().then(function(reponse){
                         socket.emit('out', 'Vous avez été enregistré!');
+                        //socket.emit('out', 'ajout possible...');
                         compteur = compteur + 1;
                 }, function(err){
                         socket.emit('out', 'Enregistrement échoué! ' + err);
                     });
                 })
             }
-            else if (reponse.toLowerCase() === 'non'){}
+            else if (reponse.toLowerCase() === 'non'){
+                //socket.emit('out', 'ajout possible...');
+                compteur = 4;
+            }
+            else{
+                    socket.emit('out', 'oui ou non!!');
+                    
+            }
+        }
+        /*
+        // Possibilité de voir l'ensemble de la base de données : historique
+        else if (compteur == 5){
+            if(reponse.toLowerCase() === 'oui'){
+                // utilisation de l'API REST
+                Model.find({}).then(function(result_ssn_bdd){ // Trouver toutes les données présentes sur la base de données
+                        socket.emit('out','La BDD contient les élèments suivants : ' + result_ssn_bdd);
+                    });
+                
+            }
+            else if (reponse.toLowerCase() === 'non'){
+                //socket.emit('out', 'ajout possible...');
+                // fin
+            }
             else{
                     socket.emit('out', 'oui ou non!!');
             }
-        }
+        }*/
     });
 });
 

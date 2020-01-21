@@ -10,12 +10,23 @@ En lançant le navigateur sur l’adresse de l'API : http://localhost:3000, une 
 Après la saisie de informations sur le numero de sécurité sociale, l'API devra :
 - Verifier la validité de son format, extraire et afficher les informations que le 
 numéro SSN comporte!
+- Afficher les différentes informations (sexe, date et lieu de naissance)
 
 Numéro d'exemple: 
-SSN : 180079938020602  | 298069152102373  | 173119206201448 | 173119300705974 | 196049402838385
+SSN : | 298069152102373 | 173119206201448 | 173119300705974 | 196049402838385 | 174019913917193 | 193059935278381
 
 Après avoir récupérer toutes ses informations, l'application propose de les sauvegarder dans la base de données MongoDB sauf si le numéro ssn est déjà présent dans la base, et 
 affiche les informations de la personne lié à ce numéro ssn
+Les sauvegardes se décomposent de la manière suivante:
+    id : numero généré en automatique,
+    nom : nom donné sur l'application,
+    prenom : nom donnée sur l'application,
+    ssn_complet : numéro ssn donnée sur l'application,
+    SSN: {
+        departement: nom du département (trouvé sur l'API),
+        pays: nom du pays (trouvé sur le fichier pays),
+        commune: nom de la commune (trouvé sur l'API)
+    },
 
 Docker fonctionnel:
 Commande pour créer et activer
