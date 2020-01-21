@@ -16,7 +16,8 @@ Numéro d'exemple:
 SSN : | 298069152102373 | 173119206201448 | 173119300705974 | 196049402838385 | 174019913917193 | 193059935278381
 Pour récupérer les images sur le hub docker : appli
 #### docker pull laetitiaff98/vilainappli:latest
-
+Pour accéder au git hub : 
+### https://github.com/LaetitiaFF/Socket_Io.git
 Après avoir récupérer toutes ses informations, l'application propose de les sauvegarder dans la base de données MongoDB sauf si le numéro ssn est déjà présent dans la base, et 
 affiche les informations de la personne lié à ce numéro ssn
 Les sauvegardes se décomposent de la manière suivante:
