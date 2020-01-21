@@ -50,3 +50,16 @@ git add *
 git commit -m "comm"
 git remote add origin git@github.com:LaetitiaFF/Socket_Io.git
 git push -u origin master
+
+
+Note : ancien Dockerfile, ne pas prendre en compte
+FROM ubuntu:latest
+
+RUN apt update
+RUN apt install nodejs -y
+
+EXPOSE 3000
+
+ADD . /lecellier/
+
+ENTRYPOINT /usr/bin/node /lecellier/index.js
